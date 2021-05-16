@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "baseUrl": "./spa",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "es5",
+    "allowJs": false,
+    "paths": { "*": ["types/*"]},
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react"
+  },
+  "exclude": [
+    "node_modules",
+    "webpack"
+  ]
+}
