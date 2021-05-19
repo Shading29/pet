@@ -1,18 +1,19 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-  mode: 'development',
+  mode: process.env.NODE_ENV,
   target: 'web',
-  devtool: 'inline-source-map',
+  devtool: process.env.NODE_ENV === 'development' ? 'inline-source-map' : 'hidden-nosources-source-map',
   entry: {
     main: './spa/App.tsx',
   },
   output: {
     filename: '[name].js',
     chunkFilename: '[name].chunk.js',
-    path: path.resolve('build'),
+    path: path.resolve(process.cwd(), 'build', process.env.NODE_ENV || ''),
   },
   module: {
     rules: [
@@ -43,25 +44,29 @@ module.exports = {
     static: true,
   },
   optimization: {
-    minimize: false,
+    minimize: process.env.NODE_ENV === 'production' || false,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          warnings: false,
+          compress: {
+            comparisons: false,
+          },
+          parse: {},
+          mangle: true,
+          output: {
+            comments: false,
+            ascii_only: true,
+          },
+        },
+        parallel: true,
+      }),
+    ],
     runtimeChunk: {
       name: 'runtime',
     },
     splitChunks: {
       chunks: 'all',
-      cacheGroups: {
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          chunks: 'all',
-        },
-        main: {
-          chunks: 'all',
-          minChunks: 2,
-          reuseExistingChunk: true,
-          enforce: true,
-        },
-      },
     },
   },
   plugins: [
