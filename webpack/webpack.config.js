@@ -13,6 +13,7 @@ module.exports = {
     filename: '[name].js',
     chunkFilename: '[name].chunk.js',
     path: path.resolve('build'),
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -40,28 +41,12 @@ module.exports = {
     compress: false,
     port: 9000,
     hot: true,
-    static: true,
+    historyApiFallback: true,
   },
   optimization: {
     minimize: false,
-    runtimeChunk: {
-      name: 'runtime',
-    },
     splitChunks: {
       chunks: 'all',
-      cacheGroups: {
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          chunks: 'all',
-        },
-        main: {
-          chunks: 'all',
-          minChunks: 2,
-          reuseExistingChunk: true,
-          enforce: true,
-        },
-      },
     },
   },
   plugins: [

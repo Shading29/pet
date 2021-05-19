@@ -2,17 +2,48 @@ import React from 'react';
 import GlobalStyle from '../../global-styles';
 import { IProps, IState } from './types';
 import { AppWrapper } from './wrappers';
+import { Switch, withRouter, BrowserRouter as Router } from 'react-router-dom';
+import ProtectedRoute from '../../routes/AuthRoute';
+import LoginPage from '../LoginPage';
+import HomePage from '../HomePage';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
 class App extends React.Component<IProps, IState> {
   render() {
+    console.log('rerender');
     return (
       <AppWrapper>
-        <div>Tddda321312312damasked312321ads sdddt</div>
-        <div>2332321вфывыф321312321223</div>
-        <GlobalStyle />
+        <Router>
+          <Switch>
+            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+            {/*// @ts-ignore*/}
+            <ProtectedRoute exact path="/" component={HomePage} />
+            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+            {/*// @ts-ignore*/}
+            <ProtectedRoute path="/login" component={LoginPage} />
+          </Switch>
+          <GlobalStyle />
+        </Router>
       </AppWrapper>
     );
   }
 }
 
-export default App;
+// const mapStateToProps = createStructuredSelector({
+//   clientFillPage: makeSelectClientFillPage(),
+// });
+//
+//
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     getIframeLink: ev => dispatch(getIframeLink(ev)),
+//     clearIframeLink: () => dispatch(clearIframeLink()),
+//   };
+// }
+
+const withConnect = connect(null, null);
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+export default withRouter(compose(withConnect)(App));
