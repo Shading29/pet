@@ -9,11 +9,12 @@ import injectReducer from '../../redux/injectReducer';
 // @ts-ignore
 import injectSaga from '../../redux/injectSaga';
 import saga from './saga';
+import history from '../../redux/history';
 
 interface IProps {}
 
 const LoginPage: React.FC<IProps> = (props: IProps) => {
-  return <div>Это Login Page!</div>;
+  return <button onClick={() => history.push('/')}>Это Login Page!</button>;
 };
 
 const withConnect = connect(null, null);

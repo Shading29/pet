@@ -14,7 +14,7 @@ import history from '../../redux/history';
 interface IProps {}
 
 const LoginPage: React.FC<IProps> = (props: IProps) => {
-  return <button onClick={() => history.replace('/login')}>Это Home Page!</button>;
+  return <button onClick={() => history.push('/login')}>Это Home Page!</button>;
 };
 
 const withConnect = connect(null, null);

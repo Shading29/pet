@@ -1,3 +1,3 @@
-export function* appPageSaga() {
+export default function* () {
   yield console.log(5);
 }

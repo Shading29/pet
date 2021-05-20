@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import configureStore from './configureStore';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { ConnectedRouter } from "connected-react-router/immutable";
+import { ConnectedRouter } from 'connected-react-router/immutable';
 import history from './redux/history';
 
 const fontObserver = new FontFaceObserver('Open Sans', {});

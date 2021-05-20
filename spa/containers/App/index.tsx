@@ -2,29 +2,31 @@ import React from 'react';
 import GlobalStyle from '../../global-styles';
 import { IProps, IState } from './types';
 import { AppWrapper } from './wrappers';
-import { Switch, withRouter, BrowserRouter as Router } from 'react-router-dom';
+import { Switch, withRouter } from 'react-router-dom';
 import ProtectedRoute from '../../routes/AuthRoute';
 import LoginPage from '../LoginPage';
 import HomePage from '../HomePage';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import injectSaga from '../../redux/injectSaga';
+import saga from './saga';
 
 class App extends React.Component<IProps, IState> {
   render() {
     console.log('rerender');
     return (
       <AppWrapper>
-        <Router>
-          <Switch>
-            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-            {/*// @ts-ignore*/}
-            <ProtectedRoute exact path="/" component={HomePage} />
-            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-            {/*// @ts-ignore*/}
-            <ProtectedRoute path="/login" component={LoginPage} />
-          </Switch>
-          <GlobalStyle />
-        </Router>
+        <Switch>
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/*// @ts-ignore*/}
+          <ProtectedRoute exact path="/" component={HomePage} />
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/*// @ts-ignore*/}
+          <ProtectedRoute path="/login" component={LoginPage} />
+        </Switch>
+        <GlobalStyle />
       </AppWrapper>
     );
   }
@@ -43,7 +45,8 @@ class App extends React.Component<IProps, IState> {
 // }
 
 const withConnect = connect(null, null);
+const withSaga = injectSaga({ key: 'global', saga });
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-export default withRouter(compose(withConnect)(App));
+export default withRouter(compose(withSaga, withConnect)(App));
